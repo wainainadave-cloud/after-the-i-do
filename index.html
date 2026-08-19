@@ -931,16 +931,56 @@
     @media(max-width:520px){.magic-stage{gap:9px}.magic-photo,.magic-photo img{min-height:210px}.magic-photo{border-radius:18px}.network-toast{font-size:.83rem}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.reveal{opacity:1!important;transform:none!important;filter:none!important}.motion-orb{display:none}}
 
-  </style>
+  
+    /* ===== MANUAL PHOTO QUALITY CONTROL ===== */
+    .quality-control{position:fixed;right:16px;bottom:16px;z-index:900}
+    .quality-control .connection-badge{position:relative;right:auto;bottom:auto;cursor:pointer;border:1px solid var(--line);font-family:inherit}
+    .quality-chevron{font-size:.72rem;margin-left:2px;transition:transform .25s ease}
+    .quality-control.open .quality-chevron{transform:rotate(180deg)}
+    .quality-menu{position:absolute;right:0;bottom:calc(100% + 10px);width:min(310px,calc(100vw - 28px));padding:10px;border-radius:20px;background:rgba(255,250,247,.97);border:1px solid var(--line);box-shadow:0 22px 60px rgba(74,20,38,.2);backdrop-filter:blur(18px);opacity:0;visibility:hidden;transform:translateY(8px) scale(.98);transform-origin:bottom right;transition:.25s ease;color:var(--maroon-deep)}
+    .quality-control.open .quality-menu{opacity:1;visibility:visible;transform:none}
+    .quality-menu-title{padding:8px 10px 7px;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.12em;opacity:.58}
+    .quality-option{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;text-align:left;border:0;background:transparent;padding:11px 10px;border-radius:14px;color:inherit;cursor:pointer;font-family:inherit;transition:background .2s ease}
+    .quality-option:hover{background:rgba(127,36,63,.07)}
+    .quality-option strong{display:block;font-size:.9rem;margin-bottom:2px}
+    .quality-option small{display:block;font-size:.72rem;line-height:1.3;opacity:.62}
+    .quality-check{opacity:0;font-weight:900;color:var(--maroon)}
+    .quality-option.active .quality-check{opacity:1}
+    .network-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .network-action{border:1px solid rgba(255,255,255,.38);border-radius:999px;background:rgba(255,255,255,.12);color:white;padding:7px 11px;font:inherit;font-size:.78rem;font-weight:800;cursor:pointer}
+    .network-action.primary{background:white;color:var(--maroon-deep)}
+    @media(max-width:760px){.quality-control{right:10px;bottom:10px}}
+
+</style>
 </head>
 <body>
 
   <div class="network-toast" id="networkToast" role="status" aria-live="polite">
     <button type="button" aria-label="Dismiss connection notice">×</button>
     <strong>Slow connection detected.</strong>
-    We’ll use lighter wedding photos so everything opens quickly and smoothly.
+    We’ve switched to lighter wedding photos so everything opens quickly and smoothly.
+    <div class="network-actions">
+      <button class="network-action primary" id="keepLiteButton" type="button">Keep Lite Mode</button>
+      <button class="network-action" id="viewHDButton" type="button">View HD instead</button>
+    </div>
   </div>
-  <div class="connection-badge" id="connectionBadge" aria-live="polite"><span class="dot"></span><span id="connectionText">Optimising photos…</span></div>
+  <div class="quality-control" id="qualityControl">
+    <button class="connection-badge" id="connectionBadge" type="button" aria-haspopup="true" aria-expanded="false">
+      <span class="dot"></span><span id="connectionText">Optimising photos…</span><span class="quality-chevron">⌃</span>
+    </button>
+    <div class="quality-menu" id="qualityMenu" role="menu" aria-label="Photo quality">
+      <div class="quality-menu-title">Photo Quality</div>
+      <button type="button" class="quality-option" data-quality="auto" role="menuitem">
+        <span><strong>Auto</strong><small>Recommended · adapts to your connection</small></span><span class="quality-check">✓</span>
+      </button>
+      <button type="button" class="quality-option" data-quality="hd" role="menuitem">
+        <span><strong>HD</strong><small>Best photo quality</small></span><span class="quality-check">✓</span>
+      </button>
+      <button type="button" class="quality-option" data-quality="lite" role="menuitem">
+        <span><strong>Lite</strong><small>Faster · uses less data</small></span><span class="quality-check">✓</span>
+      </button>
+    </div>
+  </div>
   <span class="motion-orb" style="left:7%;top:22%;--dur:13s;--x:34px;"></span>
   <span class="motion-orb" style="right:8%;top:48%;--dur:16s;--x:46px;width:11px;height:11px;"></span>
   <span class="motion-orb" style="left:13%;top:73%;--dur:18s;--x:26px;width:9px;height:9px;"></span>
@@ -1292,141 +1332,157 @@
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const toast = document.getElementById('networkToast');
+    const qualityControl = document.getElementById('qualityControl');
     const badge = document.getElementById('connectionBadge');
+    const qualityMenu = document.getElementById('qualityMenu');
     const connectionText = document.getElementById('connectionText');
+    const qualityOptions = [...document.querySelectorAll('.quality-option')];
+    const adaptiveImages = [...document.querySelectorAll('img[data-adaptive-image]')];
 
-    function detectConnection() {
-      if (!connection) return { mode:'full', label:'Standard photos' };
-      const type = (connection.effectiveType || '').toLowerCase();
-      const downlink = Number(connection.downlink || 0);
-      const slow = connection.saveData || type === 'slow-2g' || type === '2g' ||
-                   (type === '3g' && downlink > 0 && downlink < 1.5) ||
-                   (downlink > 0 && downlink < .9);
-      return { mode: slow ? 'lite' : 'full', label: slow ? 'Lite photos · faster loading' : 'HD photos' };
+    function autoDetect() {
+      if (!connection) return 'full';
+      const type=(connection.effectiveType||'').toLowerCase(), downlink=Number(connection.downlink||0);
+      return (connection.saveData || type==='slow-2g' || type==='2g' ||
+             (type==='3g' && downlink>0 && downlink<1.5) || (downlink>0 && downlink<.9)) ? 'lite' : 'full';
     }
 
-    let state = detectConnection();
+    let preference = localStorage.getItem('weddingPhotoQuality') || 'auto';
 
-    function updateConnectionUI(showNotice=true) {
-      if (state.mode === 'lite') {
-        badge?.classList.add('lite');
-        if (connectionText) connectionText.textContent = state.label;
-        if (showNotice && toast && !sessionStorage.getItem('slowNoticeDismissed')) {
-          toast.classList.add('show');
-          setTimeout(() => toast.classList.remove('show'), 8500);
-        }
-      } else {
-        badge?.classList.remove('lite');
-        if (connectionText) connectionText.textContent = state.label;
+    function resolvedMode() {
+      if (preference === 'lite') return 'lite';
+      if (preference === 'hd') return 'full';
+      return autoDetect();
+    }
+
+    let mode = resolvedMode();
+
+    function label() {
+      if (preference === 'lite') return 'Lite photos';
+      if (preference === 'hd') return 'HD photos';
+      return mode === 'lite' ? 'Auto · Lite photos' : 'Auto · HD photos';
+    }
+
+    function updateUI(showSlowNotice=false) {
+      mode=resolvedMode();
+      badge?.classList.toggle('lite',mode==='lite');
+      if(connectionText) connectionText.textContent=label();
+      qualityOptions.forEach(o=>o.classList.toggle('active',o.dataset.quality===preference));
+
+      if(showSlowNotice && preference==='auto' && mode==='lite' && toast && !sessionStorage.getItem('slowNoticeDismissed')){
+        toast.classList.add('show');
+        setTimeout(()=>toast.classList.remove('show'),10000);
       }
     }
-    updateConnectionUI();
 
-    toast?.querySelector('button')?.addEventListener('click', () => {
-      toast.classList.remove('show');
-      sessionStorage.setItem('slowNoticeDismissed','1');
-    });
+    function desiredSrc(img){ return mode==='lite' ? img.dataset.liteSrc : img.dataset.fullSrc; }
 
-    const adaptiveImages = [...document.querySelectorAll('img[data-adaptive-image]')];
-    function loadAdaptiveImage(img) {
-      if (!img || img.dataset.loadedMode) return;
-      const src = state.mode === 'lite' ? img.dataset.liteSrc : img.dataset.fullSrc;
-      if (!src) return;
-      img.dataset.loadedMode = state.mode;
-      img.addEventListener('load', () => img.classList.add('loaded'), {once:true});
-      img.src = src;
+    function loadImage(img, force=false){
+      if(!img) return;
+      const src=desiredSrc(img);
+      if(!src) return;
+      if(!force && img.dataset.loadedMode===mode) return;
+      img.dataset.loadedMode=mode;
+      img.classList.remove('loaded');
+      img.addEventListener('load',()=>img.classList.add('loaded'),{once:true});
+      img.src=src;
     }
 
-    const hero = document.querySelector('.hero-photo[data-adaptive-image]');
-    if (hero) { hero.loading='eager'; hero.fetchPriority='high'; loadAdaptiveImage(hero); }
+    function switchQuality(next){
+      preference=next;
+      localStorage.setItem('weddingPhotoQuality',preference);
+      const previousMode=mode;
+      updateUI(false);
 
-    if ('IntersectionObserver' in window) {
-      const imageObserver = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) { loadAdaptiveImage(entry.target); obs.unobserve(entry.target); }
-        });
-      }, {rootMargin:'600px 0px'});
-      adaptiveImages.forEach(img => { if (img !== hero) { img.loading='lazy'; img.decoding='async'; imageObserver.observe(img); }});
-    } else adaptiveImages.forEach(loadAdaptiveImage);
-
-    connection?.addEventListener?.('change', () => {
-      const next = detectConnection();
-      const changed = next.mode !== state.mode;
-      state = next;
-      updateConnectionUI(changed);
-    });
-
-    document.querySelectorAll('.masonry-item').forEach((el,i) => {
-      el.classList.add('reveal','scale-in');
-      el.style.setProperty('--delay', `${(i%8)*55}ms`);
-    });
-    document.querySelectorAll('.section .eyebrow,.section .section-title,.section .lead,.story-block,.support-stat,.verb,.thanks-card,.letter-paper,.beginning-card,.finale blockquote,.magic-section .reveal')
-      .forEach((el,i) => {
-        el.classList.add('reveal');
-        if (i%5===1) el.classList.add('from-left');
-        if (i%5===3) el.classList.add('from-right');
+      // Replace already loaded/visible photos when user explicitly changes quality.
+      adaptiveImages.forEach(img=>{
+        if(img.dataset.loadedMode) loadImage(img,true);
       });
 
-    if (!reduceMotion && 'IntersectionObserver' in window) {
-      const revealObserver = new IntersectionObserver((entries,obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) { entry.target.classList.add('is-visible'); obs.unobserve(entry.target); }
-        });
-      }, {threshold:.12,rootMargin:'0px 0px -4% 0px'});
-      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-    } else document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+      qualityControl?.classList.remove('open');
+      badge?.setAttribute('aria-expanded','false');
+      toast?.classList.remove('show');
+    }
 
-    const slideshow = document.getElementById('weddingSlideshow');
-    if (slideshow) {
-      let slides=[...slideshow.querySelectorAll('.slide')], index=0, timer;
-      const show=n => {
-        slides=slides.filter(s => getComputedStyle(s).display!=='none');
-        if (!slides.length) return;
-        slides.forEach(s=>s.classList.remove('active'));
-        index=(n+slides.length)%slides.length; slides[index].classList.add('active');
-      };
-      const restart=()=>{ clearInterval(timer); if(!reduceMotion&&!document.hidden) timer=setInterval(()=>show(index+1),4800); };
+    badge?.addEventListener('click',e=>{
+      e.stopPropagation();
+      const open=qualityControl.classList.toggle('open');
+      badge.setAttribute('aria-expanded',String(open));
+    });
+    qualityMenu?.addEventListener('click',e=>e.stopPropagation());
+    document.addEventListener('click',()=>{
+      qualityControl?.classList.remove('open');
+      badge?.setAttribute('aria-expanded','false');
+    });
+    qualityOptions.forEach(option=>option.addEventListener('click',()=>switchQuality(option.dataset.quality)));
+
+    toast?.querySelector('button[aria-label="Dismiss connection notice"]')?.addEventListener('click',()=>{
+      toast.classList.remove('show'); sessionStorage.setItem('slowNoticeDismissed','1');
+    });
+    document.getElementById('keepLiteButton')?.addEventListener('click',()=>switchQuality('lite'));
+    document.getElementById('viewHDButton')?.addEventListener('click',()=>switchQuality('hd'));
+
+    updateUI(true);
+
+    const hero=document.querySelector('.hero-photo[data-adaptive-image]');
+    if(hero){hero.loading='eager';hero.fetchPriority='high';loadImage(hero);}
+
+    if('IntersectionObserver' in window){
+      const imageObserver=new IntersectionObserver((entries,obs)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){loadImage(entry.target);obs.unobserve(entry.target);}
+        });
+      },{rootMargin:'600px 0px'});
+      adaptiveImages.forEach(img=>{
+        if(img!==hero){img.loading='lazy';img.decoding='async';imageObserver.observe(img);}
+      });
+    } else adaptiveImages.forEach(loadImage);
+
+    connection?.addEventListener?.('change',()=>{
+      if(preference!=='auto') return;
+      const old=mode; updateUI(old!==resolvedMode());
+      if(old!==mode){
+        // In Auto, do not waste bandwidth re-downloading already loaded images.
+        // Newly encountered images use the newly resolved quality.
+      }
+    });
+
+    document.querySelectorAll('.masonry-item').forEach((el,i)=>{
+      el.classList.add('reveal','scale-in');el.style.setProperty('--delay',`${(i%8)*55}ms`);
+    });
+    document.querySelectorAll('.section .eyebrow,.section .section-title,.section .lead,.story-block,.support-stat,.verb,.thanks-card,.letter-paper,.beginning-card,.finale blockquote,.magic-section .reveal')
+      .forEach((el,i)=>{el.classList.add('reveal');if(i%5===1)el.classList.add('from-left');if(i%5===3)el.classList.add('from-right');});
+
+    if(!reduceMotion&&'IntersectionObserver'in window){
+      const ro=new IntersectionObserver((entries,obs)=>entries.forEach(entry=>{
+        if(entry.isIntersecting){entry.target.classList.add('is-visible');obs.unobserve(entry.target);}
+      }),{threshold:.12,rootMargin:'0px 0px -4% 0px'});
+      document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+    }else document.querySelectorAll('.reveal').forEach(el=>el.classList.add('is-visible'));
+
+    const slideshow=document.getElementById('weddingSlideshow');
+    if(slideshow){
+      let slides=[...slideshow.querySelectorAll('.slide')],index=0,timer;
+      const show=n=>{slides=[...slideshow.querySelectorAll('.slide')].filter(s=>getComputedStyle(s).display!=='none');if(!slides.length)return;slides.forEach(s=>s.classList.remove('active'));index=(n+slides.length)%slides.length;slides[index].classList.add('active');};
+      const restart=()=>{clearInterval(timer);if(!reduceMotion&&!document.hidden)timer=setInterval(()=>show(index+1),4800);};
       slideshow.querySelector('[data-slide="prev"]')?.addEventListener('click',()=>{show(index-1);restart()});
       slideshow.querySelector('[data-slide="next"]')?.addEventListener('click',()=>{show(index+1);restart()});
-      slideshow.addEventListener('mouseenter',()=>clearInterval(timer));
-      slideshow.addEventListener('mouseleave',restart);
-      document.addEventListener('visibilitychange',restart);
-      restart();
+      slideshow.addEventListener('mouseenter',()=>clearInterval(timer));slideshow.addEventListener('mouseleave',restart);document.addEventListener('visibilitychange',restart);restart();
     }
 
-    const magicButton=document.getElementById('magicButton');
-    const magicStage=document.getElementById('magicStage');
+    const magicButton=document.getElementById('magicButton'),magicStage=document.getElementById('magicStage');
     function burst(origin){
-      if(reduceMotion) return;
+      if(reduceMotion)return;
       const icons=['✨','♡','✦','❤','✧'],r=origin.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
-      for(let i=0;i<22;i++){
-        const s=document.createElement('span'); s.className='spark'; s.textContent=icons[Math.floor(Math.random()*icons.length)];
-        s.style.left=`${x}px`; s.style.top=`${y}px`;
-        const a=Math.PI*2*i/22+Math.random()*.45,d=70+Math.random()*170;
-        s.style.setProperty('--dx',`${Math.cos(a)*d}px`); s.style.setProperty('--dy',`${Math.sin(a)*d-35}px`);
-        s.style.setProperty('--spin',`${Math.round(Math.random()*440-220)}deg`); s.style.setProperty('--size',`${14+Math.random()*16}px`);
-        document.body.appendChild(s); setTimeout(()=>s.remove(),1200);
-      }
+      for(let i=0;i<22;i++){const s=document.createElement('span');s.className='spark';s.textContent=icons[Math.floor(Math.random()*icons.length)];s.style.left=`${x}px`;s.style.top=`${y}px`;const a=Math.PI*2*i/22+Math.random()*.45,d=70+Math.random()*170;s.style.setProperty('--dx',`${Math.cos(a)*d}px`);s.style.setProperty('--dy',`${Math.sin(a)*d-35}px`);s.style.setProperty('--spin',`${Math.round(Math.random()*440-220)}deg`);s.style.setProperty('--size',`${14+Math.random()*16}px`);document.body.appendChild(s);setTimeout(()=>s.remove(),1200);}
     }
-    magicButton?.addEventListener('click',()=>{
-      magicStage?.classList.add('open');
-      magicButton.textContent='There it is ❤️'; magicButton.disabled=true;
-      magicStage?.querySelectorAll('img[data-adaptive-image]').forEach(loadAdaptiveImage);
-      burst(magicButton);
-      setTimeout(()=>magicStage?.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'}),180);
-    });
+    magicButton?.addEventListener('click',()=>{magicStage?.classList.add('open');magicButton.textContent='There it is ❤️';magicButton.disabled=true;magicStage?.querySelectorAll('img[data-adaptive-image]').forEach(img=>loadImage(img));burst(magicButton);setTimeout(()=>magicStage?.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'}),180);});
 
     const box=document.getElementById('imageLightbox');
     if(box){
       const full=box.querySelector('img'),closeBtn=box.querySelector('.lightbox-close');
-      const close=()=>{box.classList.remove('open');full.src='';document.body.style.overflow=''};
-      document.addEventListener('click',e=>{
-        const img=e.target.closest('img[data-lightbox]');
-        if(img&&img.src&&getComputedStyle(img).display!=='none'){full.src=img.src;full.alt=img.alt||'Wedding photo';box.classList.add('open');document.body.style.overflow='hidden'}
-      });
-      closeBtn?.addEventListener('click',close);
-      box.addEventListener('click',e=>{if(e.target===box)close()});
-      document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+      const close=()=>{box.classList.remove('open');full.src='';document.body.style.overflow='';};
+      document.addEventListener('click',e=>{const img=e.target.closest('img[data-lightbox]');if(img&&img.src&&getComputedStyle(img).display!=='none'){full.src=img.src;full.alt=img.alt||'Wedding photo';box.classList.add('open');document.body.style.overflow='hidden';}});
+      closeBtn?.addEventListener('click',close);box.addEventListener('click',e=>{if(e.target===box)close();});document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
     }
   })();
   </script>
