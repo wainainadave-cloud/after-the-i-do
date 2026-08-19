@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#7f243f" />
+  <meta name="description" content="Peris & David — a post-wedding note of gratitude." />
+  <title>After the “I Do” — Peris & David</title>
+
+  <style>
+    :root {
+      --maroon: #7f243f;
+      --maroon-deep: #4a1426;
+      --maroon-dark: #2e0d18;
+      --rose: #d9b7bf;
+      --blush: #ead5d8;
+      --blush-light: #f6eceb;
+      --cream: #fffaf5;
+      --paper: rgba(255, 252, 248, 0.82);
+      --green: #1f5c45;
+      --ink: #351c25;
+      --muted: #79646b;
+      --white: #fff;
+      --line: rgba(127, 36, 63, 0.15);
+      --shadow: 0 26px 70px rgba(74, 20, 38, 0.11);
+      --radius-xl: 38px;
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 4%, rgba(255,255,255,.9), transparent 24%),
+        linear-gradient(180deg, #e8ced3 0%, #f6eceb 22%, #fffaf5 56%, #f3e2df 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.14'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+      z-index: 20;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .serif {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      letter-spacing: -0.035em;
+    }
+
+    .eyebrow {
+      color: var(--maroon);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-size: .77rem;
+      font-weight: 800;
+    }
+
+    .wrap {
+      width: min(calc(100% - 34px), var(--max));
+      margin-inline: auto;
+    }
+
+    .section {
+      padding: clamp(76px, 10vw, 132px) 0;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: clamp(2.65rem, 7vw, 5.6rem);
+      line-height: .98;
+      margin: 14px 0 24px;
+      color: var(--maroon-deep);
+    }
+
+    .lead {
+      max-width: 740px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.8vw, 1.26rem);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      padding: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #d9b9c0 0%, #edd9db 100%);
+    }
+
+    .hero-card {
+      position: relative;
+      width: min(100%, 1320px);
+      min-height: calc(100svh - 36px);
+      border-radius: 40px;
+      overflow: hidden;
+      isolation: isolate;
+      box-shadow: 0 30px 90px rgba(55, 17, 31, .18);
+      background: #5e3945;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(43, 10, 22, .68) 0%, rgba(43, 10, 22, .26) 48%, rgba(43, 10, 22, .1) 100%),
+        linear-gradient(0deg, rgba(43, 10, 22, .42) 0%, transparent 52%);
+      z-index: -1;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 30px;
+      border: 1px solid rgba(255,255,255,.48);
+      border-radius: 28px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-photo,
+    .photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      background: linear-gradient(135deg, #ad8790, #5b3844);
+    }
+
+    .photo-placeholder {
+      background:
+        linear-gradient(135deg, rgba(127,36,63,.18), rgba(31,92,69,.14)),
+        linear-gradient(145deg, #ceb1b7, #f4e5e4 50%, #a77b86);
+    }
+
+    .hero-content {
+      min-height: calc(100svh - 36px);
+      padding: clamp(62px, 10vw, 116px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      position: relative;
+      z-index: 2;
+      color: var(--white);
+    }
+
+    .hero-names {
+      letter-spacing: .24em;
+      font-size: .76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(4.2rem, 12vw, 9.8rem);
+      line-height: .78;
+      margin: 0;
+      max-width: 950px;
+      text-wrap: balance;
+    }
+
+    .hero-date {
+      margin-top: 24px;
+      font-size: .92rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+    }
+
+    .hero-sub {
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      font-size: clamp(1.18rem, 2.4vw, 1.7rem);
+      margin: 8px 0 34px;
+      opacity: .95;
+    }
+
+    .pill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      padding: 13px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.5);
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(18px);
+      font-size: .92rem;
+      font-weight: 750;
+    }
+
+    /* SCRIPTURE */
+    .faith-layout {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: clamp(32px, 7vw, 90px);
+      align-items: center;
+    }
+
+    .portrait-card {
+      min-height: 650px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+      box-shadow: var(--shadow);
+      background: #d2b2b8;
+    }
+
+    .portrait-card .label {
+      position: absolute;
+      left: 22px;
+      bottom: 22px;
+      border-radius: 999px;
+      padding: 10px 15px;
+      background: rgba(255,255,255,.84);
+      backdrop-filter: blur(15px);
+      font-size: .76rem;
+      color: var(--maroon-deep);
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .scripture {
+      margin-top: 36px;
+      padding: 30px 0 0 30px;
+      border-left: 2px solid var(--maroon);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.4rem, 3vw, 2.05rem);
+      color: var(--maroon-deep);
+      line-height: 1.35;
+    }
+
+    .scripture small {
+      display: block;
+      margin-top: 14px;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* THANK YOU */
+    .thank-you {
+      background: var(--maroon-deep);
+      color: var(--white);
+      border-radius: 56px;
+      margin: 0 14px;
+      overflow: hidden;
+    }
+
+    .thank-you .wrap { padding-block: clamp(85px, 10vw, 135px); }
+    .thank-you .eyebrow { color: #efc8d1; }
+    .thank-you .section-title { color: var(--white); max-width: 950px; }
+    .thank-you .lead { color: rgba(255,255,255,.75); }
+
+    .verbs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 38px 0 54px;
+    }
+
+    .verb {
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      padding: 10px 15px;
+      color: #fff4f6;
+      font-size: .9rem;
+    }
+
+    .support-stat {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: end;
+      gap: 22px;
+      border-top: 1px solid rgba(255,255,255,.16);
+      padding-top: 34px;
+    }
+
+    .support-stat strong {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(5rem, 14vw, 10rem);
+      line-height: .72;
+      font-weight: 500;
+      color: #f2cdd4;
+    }
+
+    .support-stat span {
+      max-width: 360px;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.75);
+      padding-bottom: 4px;
+    }
+
+    /* PHOTO STORY */
+    .story-intro { margin-bottom: 54px; }
+    .story-row {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: clamp(20px, 4vw, 54px);
+      align-items: center;
+      margin: 0 0 clamp(72px, 10vw, 120px);
+    }
+    .story-row:nth-child(even) { grid-template-columns: 1.1fr .9fr; }
+    .story-row:nth-child(even) .story-copy { order: 2; }
+
+    .story-photo {
+      min-height: 540px;
+      border-radius: 34px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: var(--shadow);
+      background: #d7bbc1;
+    }
+
+    .story-number {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--rose);
+      font-size: 1.5rem;
+      font-style: italic;
+    }
+
+    .story-copy h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--maroon-deep);
+      font-size: clamp(2.5rem, 5vw, 4.8rem);
+      line-height: .95;
+      margin: 10px 0 18px;
+      font-weight: 500;
+      letter-spacing: -.035em;
+    }
+
+    .story-copy p { color: var(--muted); max-width: 520px; }
+
+    /* VILLAGE */
+    .village { background: rgba(255,255,255,.44); }
+    .village-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .village-card {
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(127,36,63,.1);
+      border-radius: 28px;
+      padding: clamp(28px, 4vw, 44px);
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(12px);
+    }
+
+    .village-card h3 {
+      margin: 0 0 24px;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--maroon-deep);
+      font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+      line-height: 1;
+      font-weight: 500;
+    }
+
+    .village-card p { margin: 0; color: var(--muted); max-width: 460px; }
+
+    /* SPECIAL THANKS */
+    .thanks-strip {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(310px, 420px);
+      gap: 18px;
+      overflow-x: auto;
+      padding: 12px 0 28px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .thanks-strip::-webkit-scrollbar { display: none; }
+
+    .thanks-card {
+      scroll-snap-align: start;
+      border-radius: 30px;
+      overflow: hidden;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 55px rgba(74,20,38,.08);
+    }
+
+    .thanks-image {
+      aspect-ratio: 4 / 3;
+      position: relative;
+      background: #d5b8be;
+      overflow: hidden;
+    }
+
+    .thanks-card .content { padding: 26px; }
+    .thanks-card h3 {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      font-size: 2rem;
+      color: var(--maroon-deep);
+    }
+    .thanks-card p { margin: 0; color: var(--muted); font-size: .96rem; }
+
+    /* MOMENTS */
+    .moments-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr 1.05fr;
+      grid-auto-rows: 250px;
+      gap: 14px;
+      margin-top: 42px;
+    }
+
+    .moment {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      min-height: 0;
+      background: #d2b4ba;
+    }
+    .moment.tall { grid-row: span 2; }
+    .moment.wide { grid-column: span 2; }
+
+    .moment figcaption {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      width: fit-content;
+      max-width: calc(100% - 28px);
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      padding: 8px 13px;
+      color: var(--maroon-deep);
+      font-size: .82rem;
+      font-weight: 700;
+    }
+
+
+
+    /* SLIDESHOW + GALLERY CTA */
+    .slideshow-section {
+      padding: 26px 0 96px;
+    }
+    .slideshow-shell {
+      width: min(calc(100% - 34px), var(--max));
+      margin-inline: auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      background: var(--maroon-deep);
+      box-shadow: var(--shadow);
+      aspect-ratio: 16 / 9;
+      min-height: 360px;
+    }
+    .slideshow-track {
+      position: absolute;
+      inset: 0;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .9s ease;
+    }
+    .slide.active { opacity: 1; }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .slide::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 54%, rgba(46,13,24,.72) 100%);
+      pointer-events: none;
+    }
+    .slide-caption {
+      position: absolute;
+      z-index: 2;
+      left: 28px;
+      bottom: 26px;
+      color: white;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      max-width: 72%;
+      text-shadow: 0 2px 16px rgba(0,0,0,.25);
+    }
+    .slideshow-controls {
+      position: absolute;
+      z-index: 4;
+      right: 18px;
+      bottom: 18px;
+      display: flex;
+      gap: 8px;
+    }
+    .slide-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.35);
+      background: rgba(255,255,255,.15);
+      color: white;
+      backdrop-filter: blur(12px);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .gallery-cta-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 34px;
+    }
+    .gallery-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 0 25px;
+      border-radius: 999px;
+      background: var(--maroon);
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: .01em;
+      box-shadow: 0 14px 34px rgba(127,36,63,.22);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .gallery-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(127,36,63,.28);
+    }
+
+    @media (max-width: 760px) {
+      .slideshow-section { padding: 8px 0 72px; }
+      .slideshow-shell {
+        width: min(calc(100% - 24px), var(--max));
+        aspect-ratio: 4 / 5;
+        min-height: 0;
+        border-radius: 26px;
+      }
+      .slide-caption { left: 18px; bottom: 22px; max-width: 65%; }
+      .slideshow-controls { right: 12px; bottom: 12px; }
+      .slide-btn { width: 40px; height: 40px; }
+      .gallery-btn { width: min(100%, 310px); }
+    }
+
+    /* MASONRY IMAGE GALLERIES */
+    .masonry-grid {
+      column-count: 3;
+      column-gap: 16px;
+      margin-top: 34px;
+    }
+    .masonry-item {
+      position: relative;
+      break-inside: avoid;
+      margin: 0 0 16px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #d5b8be;
+      box-shadow: 0 16px 38px rgba(74,20,38,.08);
+      cursor: zoom-in;
+    }
+    .masonry-item img {
+      width: 100%;
+      height: auto;
+      min-height: 240px;
+      object-fit: cover;
+      display: block;
+      transition: transform .35s ease;
+    }
+    .masonry-item:hover img { transform: scale(1.025); }
+    .masonry-item.portrait img { aspect-ratio: 4 / 5; }
+    .masonry-item.landscape img { aspect-ratio: 4 / 3; }
+    .masonry-item.square img { aspect-ratio: 1 / 1; }
+    .masonry-item figcaption {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      max-width: calc(100% - 24px);
+      background: rgba(255,255,255,.86);
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--maroon-deep);
+      font-size: .78rem;
+      font-weight: 750;
+    }
+
+    .story-block { margin: 0 0 clamp(70px, 9vw, 110px); }
+    .story-block-head {
+      display: grid;
+      grid-template-columns: minmax(0,.62fr) minmax(0,1fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+    .story-block-head h3 {
+      margin: 8px 0 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--maroon-deep);
+      font-size: clamp(2.4rem, 5vw, 4.6rem);
+      line-height: .96;
+      font-weight: 500;
+      letter-spacing: -.035em;
+    }
+    .story-block-head p { margin: 0; color: var(--muted); max-width: 560px; }
+
+    /* CLICK-TO-OPEN LIGHTBOX */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(25,7,13,.92);
+      backdrop-filter: blur(10px);
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: min(94vw, 1500px);
+      max-height: 88vh;
+      width: auto;
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.35);
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      font-size: 1.65rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    /* LETTER */
+    .letter-wrap {
+      width: min(calc(100% - 34px), 900px);
+      margin-inline: auto;
+    }
+
+    .letter-paper {
+      position: relative;
+      background: rgba(255,251,246,.82);
+      border: 1px solid rgba(127,36,63,.12);
+      border-radius: 38px;
+      padding: clamp(36px, 7vw, 76px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .letter-paper::before {
+      content: "P & D";
+      position: absolute;
+      right: -14px;
+      top: -32px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 9rem;
+      color: rgba(127,36,63,.045);
+      line-height: 1;
+    }
+
+    .letter-paper p { color: #675158; font-size: 1.08rem; }
+    .signature {
+      margin-top: 38px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      color: var(--maroon-deep);
+      font-size: 2.1rem;
+    }
+
+    /* CLOSING */
+    .beginning {
+      padding: 18px;
+    }
+
+    .beginning-card {
+      min-height: 82svh;
+      border-radius: 42px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: white;
+      background: #50303a;
+      isolation: isolate;
+    }
+    .beginning-card::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg,rgba(46,13,24,.12),rgba(46,13,24,.78));
+      z-index:-1;
+    }
+
+    .beginning-copy {
+      width: min(100% - 40px, 780px);
+      align-self: end;
+      padding-bottom: clamp(50px, 9vw, 100px);
+      position: relative;
+      z-index: 1;
+    }
+    .beginning-copy .first {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      opacity: .84;
+    }
+    .beginning-copy h2 {
+      margin: 8px 0 20px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3rem, 8vw, 6.6rem);
+      line-height: .9;
+      font-weight: 500;
+    }
+    .beginning-copy p { color: rgba(255,255,255,.78); }
+
+    .finale {
+      min-height: 78svh;
+      padding: 100px 20px 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: var(--maroon-dark);
+      color: white;
+    }
+
+    .finale .eyebrow { color: #e8bfc8; }
+    .finale h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.6rem, 10vw, 8rem);
+      line-height: .87;
+      font-weight: 500;
+      margin: 18px 0 32px;
+      max-width: 1000px;
+    }
+    .finale blockquote {
+      max-width: 750px;
+      margin: 0;
+      color: rgba(255,255,255,.78);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.15rem, 2vw, 1.5rem);
+      font-style: italic;
+    }
+    .finale blockquote span {
+      display: block;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-style: normal;
+      font-size: .75rem;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      margin-top: 14px;
+      color: #dbaab6;
+      font-weight: 800;
+    }
+
+    footer {
+      margin-top: auto;
+      padding-top: 80px;
+      font-size: .78rem;
+      color: rgba(255,255,255,.48);
+      letter-spacing: .06em;
+    }
+
+    /* Placeholder helper: remove after inserting real photos */
+    .slot-note {
+      position: absolute;
+      inset: auto 14px 14px auto;
+      z-index: 4;
+      background: rgba(46,13,24,.74);
+      color: white;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: .68rem;
+      letter-spacing: .04em;
+    }
+
+    @media (max-width: 760px) {
+      :root { --radius-xl: 30px; }
+      .section { padding: 74px 0; }
+      .wrap { width: min(calc(100% - 28px), var(--max)); }
+
+      .hero { padding: 10px; }
+      .hero-card { border-radius: 30px; min-height: calc(100svh - 20px); }
+      .hero-card::after { inset: 16px; border-radius: 22px; }
+      .hero-content {
+        min-height: calc(100svh - 20px);
+        padding: 40px 26px 46px;
+      }
+      .hero h1 { font-size: clamp(4.1rem, 21vw, 6.8rem); max-width: 6ch; }
+      .hero-sub { margin-bottom: 25px; }
+
+      .faith-layout, .story-row, .story-row:nth-child(even) {
+        grid-template-columns: 1fr;
+      }
+      .portrait-card { min-height: 520px; }
+      .story-row:nth-child(even) .story-copy { order: initial; }
+      .story-photo { min-height: 470px; }
+
+      .thank-you { margin: 0 8px; border-radius: 34px; }
+      .support-stat { grid-template-columns: 1fr; gap: 14px; }
+      .support-stat span { padding-bottom: 0; }
+
+      .village-grid { grid-template-columns: 1fr; }
+      .village-card { min-height: 190px; }
+
+      .thanks-strip { grid-auto-columns: 83vw; }
+      .masonry-grid { column-count: 2; column-gap: 10px; }
+      .masonry-item { margin-bottom: 10px; border-radius: 18px; }
+      .story-block-head { grid-template-columns: 1fr; gap: 8px; }
+
+      .moments-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 210px;
+      }
+      .moment.wide { grid-column: span 2; }
+
+      .beginning { padding: 8px; }
+      .beginning-card { border-radius: 30px; min-height: 75svh; }
+
+      .slot-note { display: none; }
+    }
+
+    @media (max-width: 420px) {
+      .masonry-grid { column-count: 1; }
+      .moments-grid { grid-auto-rows: 180px; }
+      .moment.tall { grid-row: span 2; }
+      .letter-paper { border-radius: 28px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!--
+    ============================================================
+    PHOTO SETUP FOR GITHUB
+    ============================================================
+    Put ALL wedding images inside: images/wedding/
+
+    Search this file for: ADD IMAGE HERE
+    Every image location has a comment telling you the exact filename.
+
+    IMPORTANT: GitHub filenames are case-sensitive.
+    Keep names lowercase exactly as written, e.g. hero.jpg, parents.jpg.
+
+    Most gallery images use a masonry layout automatically.
+    Clicking a loaded image opens the full-size lightbox.
+    The page still renders with styled placeholders if an image is missing.
+    ============================================================
+  -->
+
+  <header class="hero" id="top">
+    <div class="hero-card">
+      <!-- ADD IMAGE HERE: images/wedding/hero.jpg | Best: wide landscape hero photo, minimum 1800px wide -->
+      <img class="hero-photo photo-placeholder" data-lightbox src="images/wedding/hero.jpg" alt="Peris and David on their wedding day" onerror="this.style.display='none'" />
+      <div class="hero-content">
+        <div class="hero-names">Peris &amp; David</div>
+        <h1 class="serif">We got<br>married!</h1>
+        <div class="hero-date">05 · 08 · 2026</div>
+        <div class="hero-sub">And what a beautiful day it was.</div>
+        <a class="pill-link" href="#faith">See what you were part of <span aria-hidden="true">↓</span></a>
+      </div>
+      <span class="slot-note">PHOTO: hero.jpg</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="faith">
+      <div class="wrap faith-layout">
+        <div class="portrait-card photo-placeholder">
+          <!-- ADD IMAGE HERE: images/wedding/faith.jpg | Prayer, worship, or intimate ceremony moment -->
+          <img class="photo" data-lightbox src="images/wedding/faith.jpg" alt="A prayer or worship moment from the wedding" onerror="this.style.display='none'" />
+          <span class="label">05 August 2026</span>
+          <span class="slot-note">PHOTO: faith.jpg</span>
+        </div>
+
+        <div>
+          <div class="eyebrow">God was faithful</div>
+          <h2 class="section-title serif">The Lord has done great things for us.</h2>
+          <p class="lead">
+            We prayed for this day. We prepared for it. We waited for it. And by God's grace, it came. We became husband and wife surrounded by family, friends and a community that loved us extraordinarily well.
+          </p>
+          <div class="scripture">
+            “The LORD hath done great things for us; whereof we are glad.”
+            <small>Psalm 126:3 · KJV</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="thank-you" id="thank-you">
+      <div class="wrap">
+        <div class="eyebrow">Thank you</div>
+        <h2 class="section-title serif">We didn't get here alone.</h2>
+        <p class="lead">
+          Behind the beautiful photographs was a village. You prayed with us, gave, encouraged us, served, travelled, called, showed up and carried things quietly behind the scenes.
+        </p>
+
+        <div class="verbs" aria-label="Ways our community supported us">
+          <span class="verb">Prayed</span>
+          <span class="verb">Gave</span>
+          <span class="verb">Encouraged</span>
+          <span class="verb">Served</span>
+          <span class="verb">Travelled</span>
+          <span class="verb">Called</span>
+          <span class="verb">Showed up</span>
+          <span class="verb">Carried us</span>
+        </div>
+
+        <div class="support-stat">
+          <strong>200+</strong>
+          <span>people stood with us on this journey. We saw your love. We felt it. And we will remember it.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="story">
+      <div class="wrap">
+        <div class="story-intro">
+          <div class="eyebrow">Because of you</div>
+          <h2 class="section-title serif">Because of you, this happened.</h2>
+          <p class="lead">Here's a little of the beautiful day your love helped make possible. Click any image to open it full-screen.</p>
+        </div>
+
+        <div class="story-block">
+          <div class="story-block-head">
+            <div><span class="story-number">01</span><h3>The Morning</h3></div>
+            <p>The quiet preparations, nerves, prayers and laughter before everything began.</p>
+          </div>
+          <!-- ADD IMAGES HERE: morning-1.jpg, morning-2.jpg, morning-3.jpg -->
+          <div class="masonry-grid">
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/morning-1.jpg" alt="Bride or groom getting ready" onerror="this.style.display='none'"><span class="slot-note">morning-1.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/morning-2.jpg" alt="Wedding morning preparations" onerror="this.style.display='none'"><span class="slot-note">morning-2.jpg</span></figure>
+            <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/morning-3.jpg" alt="Family or bridal party preparing" onerror="this.style.display='none'"><span class="slot-note">morning-3.jpg</span></figure>
+          </div>
+        </div>
+
+        <div class="story-block">
+          <div class="story-block-head">
+            <div><span class="story-number">02</span><h3>The Ceremony</h3></div>
+            <p>The processional, worship, prayer and the sacred moments that brought us to our vows.</p>
+          </div>
+          <!-- ADD IMAGES HERE: ceremony-1.jpg, ceremony-2.jpg, ceremony-3.jpg -->
+          <div class="masonry-grid">
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/ceremony-1.jpg" alt="Wedding processional" onerror="this.style.display='none'"><span class="slot-note">ceremony-1.jpg</span></figure>
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/ceremony-2.jpg" alt="Worship or prayer during the ceremony" onerror="this.style.display='none'"><span class="slot-note">ceremony-2.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/ceremony-3.jpg" alt="Peris and David during the ceremony" onerror="this.style.display='none'"><span class="slot-note">ceremony-3.jpg</span></figure>
+          </div>
+        </div>
+
+        <div class="story-block">
+          <div class="story-block-head">
+            <div><span class="story-number">03</span><h3>We Said “I Do”</h3></div>
+            <p>The vows, rings and first moments as husband and wife.</p>
+          </div>
+          <!-- ADD IMAGES HERE: ido-1.jpg, ido-2.jpg, ido-3.jpg -->
+          <div class="masonry-grid">
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/ido-1.jpg" alt="Wedding vows" onerror="this.style.display='none'"><span class="slot-note">ido-1.jpg</span></figure>
+            <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/ido-2.jpg" alt="Wedding rings" onerror="this.style.display='none'"><span class="slot-note">ido-2.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/ido-3.jpg" alt="First moment as husband and wife" onerror="this.style.display='none'"><figcaption>Husband &amp; Wife. ❤️</figcaption><span class="slot-note">ido-3.jpg</span></figure>
+          </div>
+        </div>
+
+        <div class="story-block">
+          <div class="story-block-head">
+            <div><span class="story-number">04</span><h3>Our People</h3></div>
+            <p>Parents, family, pastors, best couple, bridal party, friends—the people around the story.</p>
+          </div>
+          <!-- ADD IMAGES HERE: people-1.jpg through people-6.jpg -->
+          <div class="masonry-grid">
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/people-1.jpg" alt="Wedding family" onerror="this.style.display='none'"><span class="slot-note">people-1.jpg</span></figure>
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/people-2.jpg" alt="Parents at the wedding" onerror="this.style.display='none'"><span class="slot-note">people-2.jpg</span></figure>
+            <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/people-3.jpg" alt="Pastors or spiritual family" onerror="this.style.display='none'"><span class="slot-note">people-3.jpg</span></figure>
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/people-4.jpg" alt="Best couple" onerror="this.style.display='none'"><span class="slot-note">people-4.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/people-5.jpg" alt="Bridal party" onerror="this.style.display='none'"><span class="slot-note">people-5.jpg</span></figure>
+            <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/people-6.jpg" alt="Friends and guests" onerror="this.style.display='none'"><span class="slot-note">people-6.jpg</span></figure>
+          </div>
+        </div>
+
+        <div class="story-block">
+          <div class="story-block-head">
+            <div><span class="story-number">05</span><h3>The Celebration</h3></div>
+            <p>The speeches, laughter, dancing and joy that carried us through the rest of the day.</p>
+          </div>
+          <!-- ADD IMAGES HERE: celebration-1.jpg through celebration-4.jpg -->
+          <div class="masonry-grid">
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/celebration-1.jpg" alt="Wedding reception" onerror="this.style.display='none'"><span class="slot-note">celebration-1.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/celebration-2.jpg" alt="Wedding speeches" onerror="this.style.display='none'"><span class="slot-note">celebration-2.jpg</span></figure>
+            <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/celebration-3.jpg" alt="Wedding dancing" onerror="this.style.display='none'"><span class="slot-note">celebration-3.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/celebration-4.jpg" alt="Wedding celebration atmosphere" onerror="this.style.display='none'"><span class="slot-note">celebration-4.jpg</span></figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slideshow-section" aria-label="Wedding highlights slideshow">
+      <div class="slideshow-shell" id="weddingSlideshow">
+        <div class="slideshow-track">
+          <figure class="slide active">
+            <!-- ADD IMAGE HERE: images/wedding/slideshow-1.jpg -->
+            <img data-lightbox src="images/wedding/slideshow-1.jpg" alt="Peris and David wedding highlight" onerror="this.closest('.slide').style.display='none'">
+            <figcaption class="slide-caption">A day we will never forget.</figcaption>
+          </figure>
+          <figure class="slide">
+            <!-- ADD IMAGE HERE: images/wedding/slideshow-2.jpg -->
+            <img data-lightbox src="images/wedding/slideshow-2.jpg" alt="Wedding ceremony highlight" onerror="this.closest('.slide').style.display='none'">
+            <figcaption class="slide-caption">Surrounded by love.</figcaption>
+          </figure>
+          <figure class="slide">
+            <!-- ADD IMAGE HERE: images/wedding/slideshow-3.jpg -->
+            <img data-lightbox src="images/wedding/slideshow-3.jpg" alt="Wedding celebration highlight" onerror="this.closest('.slide').style.display='none'">
+            <figcaption class="slide-caption">Joy, everywhere.</figcaption>
+          </figure>
+          <figure class="slide">
+            <!-- ADD IMAGE HERE: images/wedding/slideshow-4.jpg -->
+            <img data-lightbox src="images/wedding/slideshow-4.jpg" alt="Peris and David together" onerror="this.closest('.slide').style.display='none'">
+            <figcaption class="slide-caption">And then there were two. ❤️</figcaption>
+          </figure>
+        </div>
+        <div class="slideshow-controls" aria-label="Slideshow controls">
+          <button class="slide-btn" type="button" data-slide="prev" aria-label="Previous photo">‹</button>
+          <button class="slide-btn" type="button" data-slide="next" aria-label="Next photo">›</button>
+        </div>
+      </div>
+      <div class="gallery-cta-wrap">
+        <a class="gallery-btn" href="https://photos.app.goo.gl/bmj39RNQpNLxkyQS8" target="_blank" rel="noopener noreferrer">View Full Gallery <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section class="section village" id="village">
+      <div class="wrap">
+        <div class="eyebrow">Our village</div>
+        <h2 class="section-title serif">It took a village.</h2>
+        <p class="lead">There was no single kind of support. Love reached us in many different forms.</p>
+
+        <div class="village-grid">
+          <div class="village-card"><h3>Our Parents &amp; Families</h3><p>For carrying us, blessing us and walking with us.</p></div>
+          <div class="village-card"><h3>Our Pastors &amp; Spiritual Family</h3><p>For praying, counselling, teaching and continually pointing us toward Christ.</p></div>
+          <div class="village-card"><h3>Our Best Couple &amp; Bridal Party</h3><p>For standing beside us before, during and beyond the wedding day.</p></div>
+          <div class="village-card"><h3>Our Friends</h3><p>For showing up in more ways than we can count.</p></div>
+          <div class="village-card"><h3>Everyone Who Gave</h3><p>For generosity that lifted burdens and made so much possible.</p></div>
+          <div class="village-card"><h3>Everyone Who Served</h3><p>For every early morning, phone call, errand, meeting and unseen act of love.</p></div>
+          <div class="village-card"><h3>Everyone Who Celebrated With Us</h3><p>For filling the day with joy.</p></div>
+          <div class="village-card"><h3>Those Who Couldn't Be There</h3><p>For reminding us that distance did not make your love any less present.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="special-thanks">
+      <div class="wrap">
+        <div class="eyebrow">Special thanks</div>
+        <h2 class="section-title serif">To those who carried us closely…</h2>
+        <p class="lead">A few words for the people and groups who carried particular responsibility in our journey.</p>
+
+        <div class="thanks-strip">
+          <article class="thanks-card">
+            <!-- ADD IMAGE HERE: images/wedding/parents.jpg | Parents / family photo -->
+            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox src="images/wedding/parents.jpg" alt="Our parents" onerror="this.style.display='none'"><span class="slot-note">parents.jpg</span></div>
+            <div class="content"><h3>Our Parents</h3><p>[Add your personal 50–100 word message here.]</p></div>
+          </article>
+          <article class="thanks-card">
+            <!-- ADD IMAGE HERE: images/wedding/pastors.jpg | Pastors photo -->
+            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox src="images/wedding/pastors.jpg" alt="Our pastors" onerror="this.style.display='none'"><span class="slot-note">pastors.jpg</span></div>
+            <div class="content"><h3>Our Pastors</h3><p>[Add your personal 50–100 word message here.]</p></div>
+          </article>
+          <article class="thanks-card">
+            <!-- ADD IMAGE HERE: images/wedding/best-couple.jpg | Best couple photo -->
+            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox src="images/wedding/best-couple.jpg" alt="Our best couple" onerror="this.style.display='none'"><span class="slot-note">best-couple.jpg</span></div>
+            <div class="content"><h3>Our Best Couple</h3><p>[Add your personal 50–100 word message here.]</p></div>
+          </article>
+          <article class="thanks-card">
+            <!-- ADD IMAGE HERE: images/wedding/bridal-party.jpg | Bridal party photo -->
+            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox src="images/wedding/bridal-party.jpg" alt="Our bridal party" onerror="this.style.display='none'"><span class="slot-note">bridal-party.jpg</span></div>
+            <div class="content"><h3>Our Bridal Party</h3><p>[Add your personal 50–100 word message here.]</p></div>
+          </article>
+          <article class="thanks-card">
+            <!-- ADD IMAGE HERE: images/wedding/wedding-team.jpg | Wedding team photo -->
+            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox src="images/wedding/wedding-team.jpg" alt="Our wedding team" onerror="this.style.display='none'"><span class="slot-note">wedding-team.jpg</span></div>
+            <div class="content"><h3>Our Wedding Team</h3><p>[Add your personal 50–100 word message here.]</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="moments">
+      <div class="wrap">
+        <div class="eyebrow">The little things</div>
+        <h2 class="section-title serif">A few moments we'll never forget.</h2>
+        <p class="lead">The beautiful, funny and unscripted parts of the day.</p>
+
+        <!-- ADD IMAGES HERE: moment-1.jpg through moment-9.jpg. Use a mix of portrait + landscape photos. -->
+        <div class="masonry-grid">
+          <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/moment-1.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><figcaption>That moment 😂</figcaption><span class="slot-note">moment-1.jpg</span></figure>
+          <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/moment-2.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-2.jpg</span></figure>
+          <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/moment-3.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><figcaption>Joy, everywhere.</figcaption><span class="slot-note">moment-3.jpg</span></figure>
+          <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/moment-4.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-4.jpg</span></figure>
+          <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/moment-5.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-5.jpg</span></figure>
+          <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/moment-6.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><figcaption>We will remember this one.</figcaption><span class="slot-note">moment-6.jpg</span></figure>
+          <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/moment-7.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-7.jpg</span></figure>
+          <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/moment-8.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-8.jpg</span></figure>
+          <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/moment-9.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-9.jpg</span></figure>
+        </div>
+        <div class="gallery-cta-wrap">
+          <a class="gallery-btn" href="https://photos.app.goo.gl/bmj39RNQpNLxkyQS8" target="_blank" rel="noopener noreferrer">View Full Gallery <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="letter">
+      <div class="letter-wrap">
+        <article class="letter-paper">
+          <div class="eyebrow">A letter from us</div>
+          <h2 class="section-title serif">From our hearts, thank you.</h2>
+          <p>When we look back at our wedding, we don't only remember the flowers, clothes, food or photographs. We remember people.</p>
+          <p>We remember phone calls. Prayers. Contributions. Advice. Sacrifice. Encouragement. People travelling. People arriving early. People staying late. We know that many of you gave from what you had, made time where there wasn't much time, and carried things simply because you loved us.</p>
+          <p>We cannot adequately repay that kind of love. We can only say: <strong>thank you for standing with us.</strong></p>
+          <p>We pray that the Lord who used you to bless the beginning of our marriage would Himself bless you abundantly.</p>
+          <div class="signature">With love and gratitude,<br>Peris &amp; David</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="beginning" id="beginning">
+      <div class="beginning-card photo-placeholder">
+        <!-- ADD IMAGE HERE: images/wedding/walking-away.jpg | Closing image, ideally the two of you walking away together -->
+        <img class="photo" data-lightbox src="images/wedding/walking-away.jpg" alt="Peris and David walking together after the wedding" onerror="this.style.display='none'" />
+        <div class="beginning-copy">
+          <div class="first">The wedding is over.</div>
+          <h2>The marriage has begun. ❤️</h2>
+          <p>We enter this covenant grateful for the people God has placed around us and trusting Him for everything ahead.</p>
+        </div>
+        <span class="slot-note">PHOTO: walking-away.jpg</span>
+      </div>
+    </section>
+
+    <section class="finale" id="glory">
+      <div class="eyebrow">Peris &amp; David · 05 · 08 · 2026</div>
+      <h2>To God be the glory.</h2>
+      <blockquote>
+        “O give thanks unto the LORD; for he is good: for his mercy endureth for ever.”
+        <span>Psalm 136:1 · KJV</span>
+      </blockquote>
+      <p style="margin-top:42px;color:rgba(255,255,255,.7);">Thank you for being part of our story. ❤️</p>
+      <footer>Peris &amp; David · 05.08.2026 · Made with gratitude.</footer>
+    </section>
+  </main>
+
+
+  <!-- IMAGE LIGHTBOX: clicking any image marked data-lightbox opens it here -->
+  <div class="lightbox" id="imageLightbox" role="dialog" aria-modal="true" aria-label="Full-size wedding photo">
+    <button class="lightbox-close" type="button" aria-label="Close image">×</button>
+    <img src="" alt="Expanded wedding photo">
+  </div>
+
+  <script>
+    (() => {
+      const root = document.getElementById('weddingSlideshow');
+      if (!root) return;
+      let slides = [...root.querySelectorAll('.slide')].filter(slide => slide.style.display !== 'none');
+      if (!slides.length) return;
+      let index = 0;
+      let timer;
+
+      function refreshSlides() {
+        slides = [...root.querySelectorAll('.slide')].filter(slide => getComputedStyle(slide).display !== 'none');
+        if (index >= slides.length) index = 0;
+      }
+      function show(nextIndex) {
+        refreshSlides();
+        if (!slides.length) return;
+        slides.forEach(slide => slide.classList.remove('active'));
+        index = (nextIndex + slides.length) % slides.length;
+        slides[index].classList.add('active');
+      }
+      function restart() {
+        clearInterval(timer);
+        timer = setInterval(() => show(index + 1), 4500);
+      }
+
+      root.querySelector('[data-slide="prev"]').addEventListener('click', () => { show(index - 1); restart(); });
+      root.querySelector('[data-slide="next"]').addEventListener('click', () => { show(index + 1); restart(); });
+      root.addEventListener('mouseenter', () => clearInterval(timer));
+      root.addEventListener('mouseleave', restart);
+      restart();
+    })();
+
+    (() => {
+      const box = document.getElementById('imageLightbox');
+      if (!box) return;
+      const full = box.querySelector('img');
+      const closeBtn = box.querySelector('.lightbox-close');
+
+      function openImage(img) {
+        if (!img || !img.src || getComputedStyle(img).display === 'none') return;
+        full.src = img.src;
+        full.alt = img.alt || 'Wedding photo';
+        box.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeImage() {
+        box.classList.remove('open');
+        full.src = '';
+        document.body.style.overflow = '';
+      }
+
+      document.addEventListener('click', (event) => {
+        const img = event.target.closest('img[data-lightbox]');
+        if (img) openImage(img);
+      });
+      closeBtn.addEventListener('click', closeImage);
+      box.addEventListener('click', (event) => { if (event.target === box) closeImage(); });
+      document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeImage(); });
+    })();
+  </script>
+
+</body>
+</html>
