@@ -896,15 +896,61 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
     }
+  
+    /* ===== ADAPTIVE CONNECTION + MOTION ===== */
+    .network-toast{position:fixed;top:18px;left:50%;transform:translate(-50%,-18px);width:min(calc(100% - 28px),560px);z-index:1000;padding:13px 42px 13px 16px;border-radius:18px;border:1px solid rgba(255,255,255,.5);background:rgba(74,20,38,.93);color:#fff;box-shadow:0 18px 46px rgba(46,13,24,.24);backdrop-filter:blur(18px);opacity:0;pointer-events:none;transition:.45s ease;font-size:.9rem;line-height:1.45}
+    .network-toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+    .network-toast strong{display:block;margin-bottom:2px}.network-toast button{position:absolute;top:7px;right:10px;border:0;background:transparent;color:#fff;font-size:1.25rem;cursor:pointer}
+    .connection-badge{position:fixed;right:16px;bottom:16px;z-index:80;display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;background:rgba(255,250,245,.9);border:1px solid var(--line);box-shadow:0 10px 30px rgba(74,20,38,.1);color:var(--maroon-deep);font-size:.76rem;font-weight:800;backdrop-filter:blur(14px)}
+    .connection-badge .dot{width:8px;height:8px;border-radius:50%;background:#1f8b5b;box-shadow:0 0 0 5px rgba(31,139,91,.1)}
+    .connection-badge.lite .dot{background:#d59637;box-shadow:0 0 0 5px rgba(213,150,55,.12)}
+    .reveal{opacity:0;transform:translateY(34px);filter:blur(5px);transition:opacity .85s cubic-bezier(.2,.7,.2,1),transform .85s cubic-bezier(.2,.7,.2,1),filter .85s ease;will-change:transform,opacity}
+    .reveal.from-left{transform:translateX(-42px)}.reveal.from-right{transform:translateX(42px)}.reveal.scale-in{transform:scale(.94) translateY(18px)}.reveal.is-visible{opacity:1;transform:none;filter:none}.masonry-item.reveal{transition-delay:var(--delay,0ms)}
+    .motion-orb{position:fixed;width:16px;height:16px;border-radius:50%;pointer-events:none;z-index:2;opacity:.18;background:radial-gradient(circle at 30% 30%,#fff,#d9b7bf 38%,#7f243f 100%);animation:drift var(--dur,12s) ease-in-out infinite alternate}
+    @keyframes drift{0%{transform:translate3d(0,0,0) scale(.85)}50%{transform:translate3d(var(--x,28px),-36px,0) scale(1.15)}100%{transform:translate3d(calc(var(--x,28px) * -1),24px,0) scale(.95)}}
+    .hero-card{transform-origin:center;animation:heroEnter 1.1s cubic-bezier(.2,.75,.2,1) both}@keyframes heroEnter{from{opacity:0;transform:scale(.975) translateY(12px)}to{opacity:1;transform:none}}
+    .hero h1{animation:heroText 1.05s .16s cubic-bezier(.2,.75,.2,1) both}@keyframes heroText{from{opacity:0;transform:translateY(34px);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+    .hero-photo{animation:heroZoom 12s ease-out both}@keyframes heroZoom{from{transform:scale(1.045)}to{transform:scale(1)}}
+    .masonry-item{cursor:zoom-in;transition:transform .35s ease,box-shadow .35s ease}.masonry-item:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(74,20,38,.16)}
+    img[data-adaptive-image]{opacity:0;transition:opacity .5s ease,transform .8s ease}img[data-adaptive-image].loaded{opacity:1}
+
+    /* ===== CLICK TO SEE MAGIC ===== */
+    .magic-section{padding:clamp(84px,11vw,146px) 0;position:relative;overflow:hidden;background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.7),transparent 25%),linear-gradient(145deg,#f8eeee,#e8ced3 55%,#d9b7bf)}
+    .magic-shell{width:min(calc(100% - 34px),1040px);margin-inline:auto;text-align:center;position:relative}
+    .magic-button{appearance:none;border:0;border-radius:999px;padding:15px 23px;color:#fff;background:linear-gradient(135deg,var(--maroon-deep),var(--maroon));font-weight:850;letter-spacing:.02em;cursor:pointer;box-shadow:0 18px 45px rgba(74,20,38,.22);transition:.25s ease}
+    .magic-button:hover{transform:translateY(-2px) scale(1.02)}.magic-button:active{transform:scale(.98)}.magic-button:disabled{cursor:default}
+    .magic-stage{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:860px;margin:42px auto 0;opacity:0;max-height:0;overflow:hidden;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease,max-height 1.1s ease}
+    .magic-stage.open{opacity:1;max-height:900px;transform:none;overflow:visible}
+    .magic-photo{position:relative;min-height:360px;border-radius:26px;overflow:hidden;background:linear-gradient(145deg,#c8aab2,#f4e4e4);box-shadow:0 20px 48px rgba(74,20,38,.15);transform:rotate(var(--rot,0deg)) translateY(18px) scale(.94);opacity:0;transition:opacity .65s ease,transform .8s cubic-bezier(.16,.8,.2,1)}
+    .magic-stage.open .magic-photo{transform:rotate(var(--rot,0deg)) translateY(0) scale(1);opacity:1}.magic-stage.open .magic-photo:nth-child(1){transition-delay:.06s}.magic-stage.open .magic-photo:nth-child(2){transition-delay:.18s}.magic-stage.open .magic-photo:nth-child(3){transition-delay:.3s}
+    .magic-photo:nth-child(1){--rot:-2.2deg}.magic-photo:nth-child(2){--rot:1.4deg}.magic-photo:nth-child(3){--rot:2.6deg}
+    .magic-photo img{width:100%;height:100%;min-height:360px;object-fit:cover}.magic-message{grid-column:1/-1;margin:14px auto 0;max-width:700px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(2rem,5vw,4rem);line-height:1;color:var(--maroon-deep)}
+    .spark{position:fixed;z-index:1100;pointer-events:none;font-size:var(--size,20px);animation:sparkleBurst 1100ms cubic-bezier(.12,.7,.2,1) forwards}
+    @keyframes sparkleBurst{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(0deg)}15%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.25) rotate(var(--spin))}}
+    @media(max-width:760px){.connection-badge{right:10px;bottom:10px;font-size:.7rem}.magic-stage{grid-template-columns:1fr 1fr}.magic-photo,.magic-photo img{min-height:250px}.magic-photo:nth-child(3){grid-column:1/-1;width:72%;justify-self:center}}
+    @media(max-width:520px){.magic-stage{gap:9px}.magic-photo,.magic-photo img{min-height:210px}.magic-photo{border-radius:18px}.network-toast{font-size:.83rem}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.reveal{opacity:1!important;transform:none!important;filter:none!important}.motion-orb{display:none}}
+
   </style>
 </head>
 <body>
+
+  <div class="network-toast" id="networkToast" role="status" aria-live="polite">
+    <button type="button" aria-label="Dismiss connection notice">×</button>
+    <strong>Slow connection detected.</strong>
+    We’ll use lighter wedding photos so everything opens quickly and smoothly.
+  </div>
+  <div class="connection-badge" id="connectionBadge" aria-live="polite"><span class="dot"></span><span id="connectionText">Optimising photos…</span></div>
+  <span class="motion-orb" style="left:7%;top:22%;--dur:13s;--x:34px;"></span>
+  <span class="motion-orb" style="right:8%;top:48%;--dur:16s;--x:46px;width:11px;height:11px;"></span>
+  <span class="motion-orb" style="left:13%;top:73%;--dur:18s;--x:26px;width:9px;height:9px;"></span>
+
 
   <!--
     ============================================================
     PHOTO SETUP FOR GITHUB
     ============================================================
-    Put ALL wedding images inside: images/wedding/
+    Put high-quality wedding images inside: images/wedding/\n    Put compressed WebP copies inside: images-lite/wedding/
 
     Search this file for: ADD IMAGE HERE
     Every image location has a comment telling you the exact filename.
@@ -921,7 +967,7 @@
   <header class="hero" id="top">
     <div class="hero-card">
       <!-- ADD IMAGE HERE: images/wedding/hero.jpg | Best: wide landscape hero photo, minimum 1800px wide -->
-      <img class="hero-photo photo-placeholder" data-lightbox src="images/wedding/hero.jpg" alt="Peris and David on their wedding day" onerror="this.style.display='none'" />
+      <img class="hero-photo photo-placeholder" data-lightbox alt="Peris and David on their wedding day" onerror="this.style.display='none'" / src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/hero.jpg" data-lite-src="images-lite/wedding/hero.webp">
       <div class="hero-content">
         <div class="hero-names">Peris &amp; David</div>
         <h1 class="serif">We got<br>married!</h1>
@@ -938,7 +984,7 @@
       <div class="wrap faith-layout">
         <div class="portrait-card photo-placeholder">
           <!-- ADD IMAGE HERE: images/wedding/faith.jpg | Prayer, worship, or intimate ceremony moment -->
-          <img class="photo" data-lightbox src="images/wedding/faith.jpg" alt="A prayer or worship moment from the wedding" onerror="this.style.display='none'" />
+          <img class="photo" data-lightbox alt="A prayer or worship moment from the wedding" onerror="this.style.display='none'" / src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/faith.jpg" data-lite-src="images-lite/wedding/faith.webp">
           <span class="label">05 August 2026</span>
           <span class="slot-note">PHOTO: faith.jpg</span>
         </div>
@@ -998,9 +1044,9 @@
           </div>
           <!-- ADD IMAGES HERE: morning-1.jpg, morning-2.jpg, morning-3.jpg -->
           <div class="masonry-grid">
-            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/morning-1.jpg" alt="Bride or groom getting ready" onerror="this.style.display='none'"><span class="slot-note">morning-1.jpg</span></figure>
-            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/morning-2.jpg" alt="Wedding morning preparations" onerror="this.style.display='none'"><span class="slot-note">morning-2.jpg</span></figure>
-            <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/morning-3.jpg" alt="Family or bridal party preparing" onerror="this.style.display='none'"><span class="slot-note">morning-3.jpg</span></figure>
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox alt="Bride or groom getting ready" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/morning-1.jpg" data-lite-src="images-lite/wedding/morning-1.webp"><span class="slot-note">morning-1.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox alt="Wedding morning preparations" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/morning-2.jpg" data-lite-src="images-lite/wedding/morning-2.webp"><span class="slot-note">morning-2.jpg</span></figure>
+            <figure class="masonry-item square photo-placeholder"><img data-lightbox alt="Family or bridal party preparing" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/morning-3.jpg" data-lite-src="images-lite/wedding/morning-3.webp"><span class="slot-note">morning-3.jpg</span></figure>
           </div>
         </div>
 
@@ -1011,9 +1057,9 @@
           </div>
           <!-- ADD IMAGES HERE: ceremony-1.jpg, ceremony-2.jpg, ceremony-3.jpg -->
           <div class="masonry-grid">
-            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/ceremony-1.jpg" alt="Wedding processional" onerror="this.style.display='none'"><span class="slot-note">ceremony-1.jpg</span></figure>
-            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/ceremony-2.jpg" alt="Worship or prayer during the ceremony" onerror="this.style.display='none'"><span class="slot-note">ceremony-2.jpg</span></figure>
-            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/ceremony-3.jpg" alt="Peris and David during the ceremony" onerror="this.style.display='none'"><span class="slot-note">ceremony-3.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox alt="Wedding processional" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/ceremony-1.jpg" data-lite-src="images-lite/wedding/ceremony-1.webp"><span class="slot-note">ceremony-1.jpg</span></figure>
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox alt="Worship or prayer during the ceremony" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/ceremony-2.jpg" data-lite-src="images-lite/wedding/ceremony-2.webp"><span class="slot-note">ceremony-2.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox alt="Peris and David during the ceremony" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/ceremony-3.jpg" data-lite-src="images-lite/wedding/ceremony-3.webp"><span class="slot-note">ceremony-3.jpg</span></figure>
           </div>
         </div>
 
@@ -1024,9 +1070,9 @@
           </div>
           <!-- ADD IMAGES HERE: ido-1.jpg, ido-2.jpg, ido-3.jpg -->
           <div class="masonry-grid">
-            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/ido-1.jpg" alt="Wedding vows" onerror="this.style.display='none'"><span class="slot-note">ido-1.jpg</span></figure>
-            <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/ido-2.jpg" alt="Wedding rings" onerror="this.style.display='none'"><span class="slot-note">ido-2.jpg</span></figure>
-            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/ido-3.jpg" alt="First moment as husband and wife" onerror="this.style.display='none'"><figcaption>Husband &amp; Wife. ❤️</figcaption><span class="slot-note">ido-3.jpg</span></figure>
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox alt="Wedding vows" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/ido-1.jpg" data-lite-src="images-lite/wedding/ido-1.webp"><span class="slot-note">ido-1.jpg</span></figure>
+            <figure class="masonry-item square photo-placeholder"><img data-lightbox alt="Wedding rings" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/ido-2.jpg" data-lite-src="images-lite/wedding/ido-2.webp"><span class="slot-note">ido-2.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox alt="First moment as husband and wife" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/ido-3.jpg" data-lite-src="images-lite/wedding/ido-3.webp"><figcaption>Husband &amp; Wife. ❤️</figcaption><span class="slot-note">ido-3.jpg</span></figure>
           </div>
         </div>
 
@@ -1037,12 +1083,12 @@
           </div>
           <!-- ADD IMAGES HERE: people-1.jpg through people-6.jpg -->
           <div class="masonry-grid">
-            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/people-1.jpg" alt="Wedding family" onerror="this.style.display='none'"><span class="slot-note">people-1.jpg</span></figure>
-            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/people-2.jpg" alt="Parents at the wedding" onerror="this.style.display='none'"><span class="slot-note">people-2.jpg</span></figure>
-            <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/people-3.jpg" alt="Pastors or spiritual family" onerror="this.style.display='none'"><span class="slot-note">people-3.jpg</span></figure>
-            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/people-4.jpg" alt="Best couple" onerror="this.style.display='none'"><span class="slot-note">people-4.jpg</span></figure>
-            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/people-5.jpg" alt="Bridal party" onerror="this.style.display='none'"><span class="slot-note">people-5.jpg</span></figure>
-            <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/people-6.jpg" alt="Friends and guests" onerror="this.style.display='none'"><span class="slot-note">people-6.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox alt="Wedding family" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/people-1.jpg" data-lite-src="images-lite/wedding/people-1.webp"><span class="slot-note">people-1.jpg</span></figure>
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox alt="Parents at the wedding" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/people-2.jpg" data-lite-src="images-lite/wedding/people-2.webp"><span class="slot-note">people-2.jpg</span></figure>
+            <figure class="masonry-item square photo-placeholder"><img data-lightbox alt="Pastors or spiritual family" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/people-3.jpg" data-lite-src="images-lite/wedding/people-3.webp"><span class="slot-note">people-3.jpg</span></figure>
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox alt="Best couple" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/people-4.jpg" data-lite-src="images-lite/wedding/people-4.webp"><span class="slot-note">people-4.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox alt="Bridal party" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/people-5.jpg" data-lite-src="images-lite/wedding/people-5.webp"><span class="slot-note">people-5.jpg</span></figure>
+            <figure class="masonry-item square photo-placeholder"><img data-lightbox alt="Friends and guests" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/people-6.jpg" data-lite-src="images-lite/wedding/people-6.webp"><span class="slot-note">people-6.jpg</span></figure>
           </div>
         </div>
 
@@ -1053,10 +1099,10 @@
           </div>
           <!-- ADD IMAGES HERE: celebration-1.jpg through celebration-4.jpg -->
           <div class="masonry-grid">
-            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/celebration-1.jpg" alt="Wedding reception" onerror="this.style.display='none'"><span class="slot-note">celebration-1.jpg</span></figure>
-            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/celebration-2.jpg" alt="Wedding speeches" onerror="this.style.display='none'"><span class="slot-note">celebration-2.jpg</span></figure>
-            <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/celebration-3.jpg" alt="Wedding dancing" onerror="this.style.display='none'"><span class="slot-note">celebration-3.jpg</span></figure>
-            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/celebration-4.jpg" alt="Wedding celebration atmosphere" onerror="this.style.display='none'"><span class="slot-note">celebration-4.jpg</span></figure>
+            <figure class="masonry-item portrait photo-placeholder"><img data-lightbox alt="Wedding reception" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/celebration-1.jpg" data-lite-src="images-lite/wedding/celebration-1.webp"><span class="slot-note">celebration-1.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox alt="Wedding speeches" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/celebration-2.jpg" data-lite-src="images-lite/wedding/celebration-2.webp"><span class="slot-note">celebration-2.jpg</span></figure>
+            <figure class="masonry-item square photo-placeholder"><img data-lightbox alt="Wedding dancing" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/celebration-3.jpg" data-lite-src="images-lite/wedding/celebration-3.webp"><span class="slot-note">celebration-3.jpg</span></figure>
+            <figure class="masonry-item landscape photo-placeholder"><img data-lightbox alt="Wedding celebration atmosphere" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/celebration-4.jpg" data-lite-src="images-lite/wedding/celebration-4.webp"><span class="slot-note">celebration-4.jpg</span></figure>
           </div>
         </div>
       </div>
@@ -1067,22 +1113,22 @@
         <div class="slideshow-track">
           <figure class="slide active">
             <!-- ADD IMAGE HERE: images/wedding/slideshow-1.jpg -->
-            <img data-lightbox src="images/wedding/slideshow-1.jpg" alt="Peris and David wedding highlight" onerror="this.closest('.slide').style.display='none'">
+            <img data-lightbox alt="Peris and David wedding highlight" onerror="this.closest('.slide').style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/slideshow-1.jpg" data-lite-src="images-lite/wedding/slideshow-1.webp">
             <figcaption class="slide-caption">A day we will never forget.</figcaption>
           </figure>
           <figure class="slide">
             <!-- ADD IMAGE HERE: images/wedding/slideshow-2.jpg -->
-            <img data-lightbox src="images/wedding/slideshow-2.jpg" alt="Wedding ceremony highlight" onerror="this.closest('.slide').style.display='none'">
+            <img data-lightbox alt="Wedding ceremony highlight" onerror="this.closest('.slide').style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/slideshow-2.jpg" data-lite-src="images-lite/wedding/slideshow-2.webp">
             <figcaption class="slide-caption">Surrounded by love.</figcaption>
           </figure>
           <figure class="slide">
             <!-- ADD IMAGE HERE: images/wedding/slideshow-3.jpg -->
-            <img data-lightbox src="images/wedding/slideshow-3.jpg" alt="Wedding celebration highlight" onerror="this.closest('.slide').style.display='none'">
+            <img data-lightbox alt="Wedding celebration highlight" onerror="this.closest('.slide').style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/slideshow-3.jpg" data-lite-src="images-lite/wedding/slideshow-3.webp">
             <figcaption class="slide-caption">Joy, everywhere.</figcaption>
           </figure>
           <figure class="slide">
             <!-- ADD IMAGE HERE: images/wedding/slideshow-4.jpg -->
-            <img data-lightbox src="images/wedding/slideshow-4.jpg" alt="Peris and David together" onerror="this.closest('.slide').style.display='none'">
+            <img data-lightbox alt="Peris and David together" onerror="this.closest('.slide').style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/slideshow-4.jpg" data-lite-src="images-lite/wedding/slideshow-4.webp">
             <figcaption class="slide-caption">And then there were two. ❤️</figcaption>
           </figure>
         </div>
@@ -1093,6 +1139,25 @@
       </div>
       <div class="gallery-cta-wrap">
         <a class="gallery-btn" href="https://photos.app.goo.gl/bmj39RNQpNLxkyQS8" target="_blank" rel="noopener noreferrer">View Full Gallery <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+
+    <section class="magic-section" id="magic">
+      <div class="magic-shell">
+        <div class="eyebrow reveal">A little surprise</div>
+        <h2 class="section-title serif reveal">Want to see a little magic?</h2>
+        <p class="lead reveal" style="margin-inline:auto;">Some moments were beautiful because of what happened. Others were beautiful because of who was there.</p>
+        <button class="magic-button reveal" id="magicButton" type="button">Click to see the magic ✨</button>
+        <div class="magic-stage" id="magicStage">
+          <!-- ADD IMAGE HERE: images/wedding/magic-1.jpg -->
+          <figure class="magic-photo photo-placeholder"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/magic-1.jpg" data-lite-src="images-lite/wedding/magic-1.webp" data-lightbox alt="A magical wedding moment" onerror="this.style.display='none'"></figure>
+          <!-- ADD IMAGE HERE: images/wedding/magic-2.jpg -->
+          <figure class="magic-photo photo-placeholder"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/magic-2.jpg" data-lite-src="images-lite/wedding/magic-2.webp" data-lightbox alt="A joyful wedding moment" onerror="this.style.display='none'"></figure>
+          <!-- ADD IMAGE HERE: images/wedding/magic-3.jpg -->
+          <figure class="magic-photo photo-placeholder"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/magic-3.jpg" data-lite-src="images-lite/wedding/magic-3.webp" data-lightbox alt="A wedding moment with people we love" onerror="this.style.display='none'"></figure>
+          <div class="magic-message">You were part of the magic. ❤️</div>
+        </div>
       </div>
     </section>
 
@@ -1125,27 +1190,27 @@
         <div class="thanks-masonry">
           <article class="thanks-card">
             <!-- ADD IMAGE HERE: images/wedding/parents.jpg | Parents / family photo -->
-            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox src="images/wedding/parents.jpg" alt="Our parents" onerror="this.style.display='none'"><span class="slot-note">parents.jpg</span></div>
+            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox alt="Our parents" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/parents.jpg" data-lite-src="images-lite/wedding/parents.webp"><span class="slot-note">parents.jpg</span></div>
             <div class="content"><h3>Our Parents</h3><p>[Add your personal 50–100 word message here.]</p></div>
           </article>
           <article class="thanks-card">
             <!-- ADD IMAGE HERE: images/wedding/pastors.jpg | Pastors photo -->
-            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox src="images/wedding/pastors.jpg" alt="Our pastors" onerror="this.style.display='none'"><span class="slot-note">pastors.jpg</span></div>
+            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox alt="Our pastors" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/pastors.jpg" data-lite-src="images-lite/wedding/pastors.webp"><span class="slot-note">pastors.jpg</span></div>
             <div class="content"><h3>Our Pastors</h3><p>[Add your personal 50–100 word message here.]</p></div>
           </article>
           <article class="thanks-card">
             <!-- ADD IMAGE HERE: images/wedding/best-couple.jpg | Best couple photo -->
-            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox src="images/wedding/best-couple.jpg" alt="Our best couple" onerror="this.style.display='none'"><span class="slot-note">best-couple.jpg</span></div>
+            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox alt="Our best couple" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/best-couple.jpg" data-lite-src="images-lite/wedding/best-couple.webp"><span class="slot-note">best-couple.jpg</span></div>
             <div class="content"><h3>Our Best Couple</h3><p>[Add your personal 50–100 word message here.]</p></div>
           </article>
           <article class="thanks-card">
             <!-- ADD IMAGE HERE: images/wedding/bridal-party.jpg | Bridal party photo -->
-            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox src="images/wedding/bridal-party.jpg" alt="Our bridal party" onerror="this.style.display='none'"><span class="slot-note">bridal-party.jpg</span></div>
+            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox alt="Our bridal party" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/bridal-party.jpg" data-lite-src="images-lite/wedding/bridal-party.webp"><span class="slot-note">bridal-party.jpg</span></div>
             <div class="content"><h3>Our Bridal Party</h3><p>[Add your personal 50–100 word message here.]</p></div>
           </article>
           <article class="thanks-card">
             <!-- ADD IMAGE HERE: images/wedding/wedding-team.jpg | Wedding team photo -->
-            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox src="images/wedding/wedding-team.jpg" alt="Our wedding team" onerror="this.style.display='none'"><span class="slot-note">wedding-team.jpg</span></div>
+            <div class="thanks-image photo-placeholder"><img class="photo" data-lightbox alt="Our wedding team" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/wedding-team.jpg" data-lite-src="images-lite/wedding/wedding-team.webp"><span class="slot-note">wedding-team.jpg</span></div>
             <div class="content"><h3>Our Wedding Team</h3><p>[Add your personal 50–100 word message here.]</p></div>
           </article>
         </div>
@@ -1160,15 +1225,15 @@
 
         <!-- ADD IMAGES HERE: moment-1.jpg through moment-9.jpg. Use a mix of portrait + landscape photos. -->
         <div class="masonry-grid">
-          <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/moment-1.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><figcaption>That moment 😂</figcaption><span class="slot-note">moment-1.jpg</span></figure>
-          <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/moment-2.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-2.jpg</span></figure>
-          <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/moment-3.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><figcaption>Joy, everywhere.</figcaption><span class="slot-note">moment-3.jpg</span></figure>
-          <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/moment-4.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-4.jpg</span></figure>
-          <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/moment-5.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-5.jpg</span></figure>
-          <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/moment-6.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><figcaption>We will remember this one.</figcaption><span class="slot-note">moment-6.jpg</span></figure>
-          <figure class="masonry-item portrait photo-placeholder"><img data-lightbox src="images/wedding/moment-7.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-7.jpg</span></figure>
-          <figure class="masonry-item landscape photo-placeholder"><img data-lightbox src="images/wedding/moment-8.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-8.jpg</span></figure>
-          <figure class="masonry-item square photo-placeholder"><img data-lightbox src="images/wedding/moment-9.jpg" alt="A candid wedding moment" onerror="this.style.display='none'"><span class="slot-note">moment-9.jpg</span></figure>
+          <figure class="masonry-item portrait photo-placeholder"><img data-lightbox alt="A candid wedding moment" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/moment-1.jpg" data-lite-src="images-lite/wedding/moment-1.webp"><figcaption>That moment 😂</figcaption><span class="slot-note">moment-1.jpg</span></figure>
+          <figure class="masonry-item landscape photo-placeholder"><img data-lightbox alt="A candid wedding moment" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/moment-2.jpg" data-lite-src="images-lite/wedding/moment-2.webp"><span class="slot-note">moment-2.jpg</span></figure>
+          <figure class="masonry-item square photo-placeholder"><img data-lightbox alt="A candid wedding moment" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/moment-3.jpg" data-lite-src="images-lite/wedding/moment-3.webp"><figcaption>Joy, everywhere.</figcaption><span class="slot-note">moment-3.jpg</span></figure>
+          <figure class="masonry-item portrait photo-placeholder"><img data-lightbox alt="A candid wedding moment" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/moment-4.jpg" data-lite-src="images-lite/wedding/moment-4.webp"><span class="slot-note">moment-4.jpg</span></figure>
+          <figure class="masonry-item landscape photo-placeholder"><img data-lightbox alt="A candid wedding moment" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/moment-5.jpg" data-lite-src="images-lite/wedding/moment-5.webp"><span class="slot-note">moment-5.jpg</span></figure>
+          <figure class="masonry-item square photo-placeholder"><img data-lightbox alt="A candid wedding moment" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/moment-6.jpg" data-lite-src="images-lite/wedding/moment-6.webp"><figcaption>We will remember this one.</figcaption><span class="slot-note">moment-6.jpg</span></figure>
+          <figure class="masonry-item portrait photo-placeholder"><img data-lightbox alt="A candid wedding moment" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/moment-7.jpg" data-lite-src="images-lite/wedding/moment-7.webp"><span class="slot-note">moment-7.jpg</span></figure>
+          <figure class="masonry-item landscape photo-placeholder"><img data-lightbox alt="A candid wedding moment" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/moment-8.jpg" data-lite-src="images-lite/wedding/moment-8.webp"><span class="slot-note">moment-8.jpg</span></figure>
+          <figure class="masonry-item square photo-placeholder"><img data-lightbox alt="A candid wedding moment" onerror="this.style.display='none'" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/moment-9.jpg" data-lite-src="images-lite/wedding/moment-9.webp"><span class="slot-note">moment-9.jpg</span></figure>
         </div>
         <div class="gallery-cta-wrap">
           <a class="gallery-btn" href="https://photos.app.goo.gl/bmj39RNQpNLxkyQS8" target="_blank" rel="noopener noreferrer">View Full Gallery <span aria-hidden="true">↗</span></a>
@@ -1193,7 +1258,7 @@
     <section class="beginning" id="beginning">
       <div class="beginning-card photo-placeholder">
         <!-- ADD IMAGE HERE: images/wedding/walking-away.jpg | Closing image, ideally the two of you walking away together -->
-        <img class="photo" data-lightbox src="images/wedding/walking-away.jpg" alt="Peris and David walking together after the wedding" onerror="this.style.display='none'" />
+        <img class="photo" data-lightbox alt="Peris and David walking together after the wedding" onerror="this.style.display='none'" / src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-adaptive-image data-full-src="images/wedding/walking-away.jpg" data-lite-src="images-lite/wedding/walking-away.webp">
         <div class="beginning-copy">
           <div class="first">The wedding is over.</div>
           <h2>The marriage has begun. ❤️</h2>
@@ -1223,64 +1288,147 @@
   </div>
 
   <script>
-    (() => {
-      const root = document.getElementById('weddingSlideshow');
-      if (!root) return;
-      let slides = [...root.querySelectorAll('.slide')].filter(slide => slide.style.display !== 'none');
-      if (!slides.length) return;
-      let index = 0;
-      let timer;
+  (() => {
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const toast = document.getElementById('networkToast');
+    const badge = document.getElementById('connectionBadge');
+    const connectionText = document.getElementById('connectionText');
 
-      function refreshSlides() {
-        slides = [...root.querySelectorAll('.slide')].filter(slide => getComputedStyle(slide).display !== 'none');
-        if (index >= slides.length) index = 0;
-      }
-      function show(nextIndex) {
-        refreshSlides();
-        if (!slides.length) return;
-        slides.forEach(slide => slide.classList.remove('active'));
-        index = (nextIndex + slides.length) % slides.length;
-        slides[index].classList.add('active');
-      }
-      function restart() {
-        clearInterval(timer);
-        timer = setInterval(() => show(index + 1), 4500);
-      }
+    function detectConnection() {
+      if (!connection) return { mode:'full', label:'Standard photos' };
+      const type = (connection.effectiveType || '').toLowerCase();
+      const downlink = Number(connection.downlink || 0);
+      const slow = connection.saveData || type === 'slow-2g' || type === '2g' ||
+                   (type === '3g' && downlink > 0 && downlink < 1.5) ||
+                   (downlink > 0 && downlink < .9);
+      return { mode: slow ? 'lite' : 'full', label: slow ? 'Lite photos · faster loading' : 'HD photos' };
+    }
 
-      root.querySelector('[data-slide="prev"]').addEventListener('click', () => { show(index - 1); restart(); });
-      root.querySelector('[data-slide="next"]').addEventListener('click', () => { show(index + 1); restart(); });
-      root.addEventListener('mouseenter', () => clearInterval(timer));
-      root.addEventListener('mouseleave', restart);
-      restart();
-    })();
+    let state = detectConnection();
 
-    (() => {
-      const box = document.getElementById('imageLightbox');
-      if (!box) return;
-      const full = box.querySelector('img');
-      const closeBtn = box.querySelector('.lightbox-close');
-
-      function openImage(img) {
-        if (!img || !img.src || getComputedStyle(img).display === 'none') return;
-        full.src = img.src;
-        full.alt = img.alt || 'Wedding photo';
-        box.classList.add('open');
-        document.body.style.overflow = 'hidden';
+    function updateConnectionUI(showNotice=true) {
+      if (state.mode === 'lite') {
+        badge?.classList.add('lite');
+        if (connectionText) connectionText.textContent = state.label;
+        if (showNotice && toast && !sessionStorage.getItem('slowNoticeDismissed')) {
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 8500);
+        }
+      } else {
+        badge?.classList.remove('lite');
+        if (connectionText) connectionText.textContent = state.label;
       }
-      function closeImage() {
-        box.classList.remove('open');
-        full.src = '';
-        document.body.style.overflow = '';
-      }
+    }
+    updateConnectionUI();
 
-      document.addEventListener('click', (event) => {
-        const img = event.target.closest('img[data-lightbox]');
-        if (img) openImage(img);
+    toast?.querySelector('button')?.addEventListener('click', () => {
+      toast.classList.remove('show');
+      sessionStorage.setItem('slowNoticeDismissed','1');
+    });
+
+    const adaptiveImages = [...document.querySelectorAll('img[data-adaptive-image]')];
+    function loadAdaptiveImage(img) {
+      if (!img || img.dataset.loadedMode) return;
+      const src = state.mode === 'lite' ? img.dataset.liteSrc : img.dataset.fullSrc;
+      if (!src) return;
+      img.dataset.loadedMode = state.mode;
+      img.addEventListener('load', () => img.classList.add('loaded'), {once:true});
+      img.src = src;
+    }
+
+    const hero = document.querySelector('.hero-photo[data-adaptive-image]');
+    if (hero) { hero.loading='eager'; hero.fetchPriority='high'; loadAdaptiveImage(hero); }
+
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) { loadAdaptiveImage(entry.target); obs.unobserve(entry.target); }
+        });
+      }, {rootMargin:'600px 0px'});
+      adaptiveImages.forEach(img => { if (img !== hero) { img.loading='lazy'; img.decoding='async'; imageObserver.observe(img); }});
+    } else adaptiveImages.forEach(loadAdaptiveImage);
+
+    connection?.addEventListener?.('change', () => {
+      const next = detectConnection();
+      const changed = next.mode !== state.mode;
+      state = next;
+      updateConnectionUI(changed);
+    });
+
+    document.querySelectorAll('.masonry-item').forEach((el,i) => {
+      el.classList.add('reveal','scale-in');
+      el.style.setProperty('--delay', `${(i%8)*55}ms`);
+    });
+    document.querySelectorAll('.section .eyebrow,.section .section-title,.section .lead,.story-block,.support-stat,.verb,.thanks-card,.letter-paper,.beginning-card,.finale blockquote,.magic-section .reveal')
+      .forEach((el,i) => {
+        el.classList.add('reveal');
+        if (i%5===1) el.classList.add('from-left');
+        if (i%5===3) el.classList.add('from-right');
       });
-      closeBtn.addEventListener('click', closeImage);
-      box.addEventListener('click', (event) => { if (event.target === box) closeImage(); });
-      document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeImage(); });
-    })();
+
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries,obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) { entry.target.classList.add('is-visible'); obs.unobserve(entry.target); }
+        });
+      }, {threshold:.12,rootMargin:'0px 0px -4% 0px'});
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    } else document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+
+    const slideshow = document.getElementById('weddingSlideshow');
+    if (slideshow) {
+      let slides=[...slideshow.querySelectorAll('.slide')], index=0, timer;
+      const show=n => {
+        slides=slides.filter(s => getComputedStyle(s).display!=='none');
+        if (!slides.length) return;
+        slides.forEach(s=>s.classList.remove('active'));
+        index=(n+slides.length)%slides.length; slides[index].classList.add('active');
+      };
+      const restart=()=>{ clearInterval(timer); if(!reduceMotion&&!document.hidden) timer=setInterval(()=>show(index+1),4800); };
+      slideshow.querySelector('[data-slide="prev"]')?.addEventListener('click',()=>{show(index-1);restart()});
+      slideshow.querySelector('[data-slide="next"]')?.addEventListener('click',()=>{show(index+1);restart()});
+      slideshow.addEventListener('mouseenter',()=>clearInterval(timer));
+      slideshow.addEventListener('mouseleave',restart);
+      document.addEventListener('visibilitychange',restart);
+      restart();
+    }
+
+    const magicButton=document.getElementById('magicButton');
+    const magicStage=document.getElementById('magicStage');
+    function burst(origin){
+      if(reduceMotion) return;
+      const icons=['✨','♡','✦','❤','✧'],r=origin.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
+      for(let i=0;i<22;i++){
+        const s=document.createElement('span'); s.className='spark'; s.textContent=icons[Math.floor(Math.random()*icons.length)];
+        s.style.left=`${x}px`; s.style.top=`${y}px`;
+        const a=Math.PI*2*i/22+Math.random()*.45,d=70+Math.random()*170;
+        s.style.setProperty('--dx',`${Math.cos(a)*d}px`); s.style.setProperty('--dy',`${Math.sin(a)*d-35}px`);
+        s.style.setProperty('--spin',`${Math.round(Math.random()*440-220)}deg`); s.style.setProperty('--size',`${14+Math.random()*16}px`);
+        document.body.appendChild(s); setTimeout(()=>s.remove(),1200);
+      }
+    }
+    magicButton?.addEventListener('click',()=>{
+      magicStage?.classList.add('open');
+      magicButton.textContent='There it is ❤️'; magicButton.disabled=true;
+      magicStage?.querySelectorAll('img[data-adaptive-image]').forEach(loadAdaptiveImage);
+      burst(magicButton);
+      setTimeout(()=>magicStage?.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'}),180);
+    });
+
+    const box=document.getElementById('imageLightbox');
+    if(box){
+      const full=box.querySelector('img'),closeBtn=box.querySelector('.lightbox-close');
+      const close=()=>{box.classList.remove('open');full.src='';document.body.style.overflow=''};
+      document.addEventListener('click',e=>{
+        const img=e.target.closest('img[data-lightbox]');
+        if(img&&img.src&&getComputedStyle(img).display!=='none'){full.src=img.src;full.alt=img.alt||'Wedding photo';box.classList.add('open');document.body.style.overflow='hidden'}
+      });
+      closeBtn?.addEventListener('click',close);
+      box.addEventListener('click',e=>{if(e.target===box)close()});
+      document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+    }
+  })();
   </script>
 
 </body>
